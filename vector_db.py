@@ -58,10 +58,7 @@ class VectorDB:
         self.model = SentenceTransformer(model_name)
 
     def retrieve(self, question: str, n_results: int = 3):
-        query_embedding = self.model.encode(
-            question,
-            normalize_embeddings=True,
-        )
+        query_embedding = self._embed(question)
 
         results = self.collection.query(
             query_embeddings=[query_embedding],
@@ -78,4 +75,8 @@ class VectorDB:
                 for i in range(len(results["ids"][0]))
             ]
 
-    
+    def _embed(self, text: str):
+        return self.model.encode(
+            text,
+            normalize_embeddings=True,
+        )
