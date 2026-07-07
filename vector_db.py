@@ -57,4 +57,25 @@ class VectorDB:
         model_name = self.collection.metadata["embedding_model"]
         self.model = SentenceTransformer(model_name)
 
+    def retrieve(self, question: str, n_results: int = 3):
+        query_embedding = self.model.encode(
+            question,
+            normalize_embeddings=True,
+        )
+
+        results = self.collection.query(
+            query_embeddings=[query_embedding],
+            n_results=n_results,
+        )
+
+        return [
+                {
+                    "id": results["ids"][0][i],
+                    "document": results["documents"][0][i],
+                    "metadata": results["metadatas"][0][i],
+                    "distance": results["distances"][0][i],
+                }
+                for i in range(len(results["ids"][0]))
+            ]
+
     
