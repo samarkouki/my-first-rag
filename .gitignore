@@ -2,3 +2,6 @@
 venv/
 __pycache__/
 *.pyc
+chroma_data/
+data/
+test_manual.py
