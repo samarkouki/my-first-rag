@@ -5,3 +5,4 @@ __pycache__/
 data/
 test_manual.py
 chroma_data/
+test_retrieve.py
